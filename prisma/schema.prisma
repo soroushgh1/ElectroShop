@@ -22,4 +22,13 @@ model Product {
   description String
   picture String
   quantity Int
+  category Category @relation(fields: [categoryid], references: [id])
+  categoryid Int
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String
+  slug String @unique
+  products Product[]
 }
