@@ -2,8 +2,8 @@ export const AuthStatus = (req, res) => {
 
     try {
         
-        const accessToken = req.cookies.AccessToken;
-        const refreshToken = req.cookies.RefreshToken;
+        const accessToken = req.cookies.accessToken;
+        const refreshToken = req.cookies.refreshToken;
 
         const authObject = {AccessToken: false, RefreshToken: false };
 

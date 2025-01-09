@@ -19,5 +19,7 @@ model Product {
   name String
   code String @unique
   price Int
+  description String
+  picture String
   quantity Int
 }

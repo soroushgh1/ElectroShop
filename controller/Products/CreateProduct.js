@@ -1,30 +1,50 @@
-import prisma from "../../prismaclient";
+import prisma from "../../prismaclient.js";
 import slugify from "slugify";
 
 export const CreateProduct = async (req, res) => {
     try {
-        
-        const { name, price, quantity } = req.body;
+        const { name, description, price, quantity, picture } = req.body;
 
-        if(!name || !price || !quantity) return res.status(400).json({ error: err.message });
-
-        if(typeof(name) !== "string" || typeof(price) !== "number" || typeof(quantity) !== "number") return res.status(400).json({ error: "The format of requested data is wrong." });
-        let codeSlug = slugify(name, { strict: true, lower: true });
-
-        const isCodeExist = await prisma.product.findUnique({ where: { code: productCode }});
-
-        let count;
-
-        while(isCodeExist) {
-            count++
+        if (!name || !price || !quantity || !description || !picture ) {
+            return res.status(400).json({ error: "All fields are required." });
         }
-        const productCode = `${codeSlug}-${count}`;
 
-        const newProduct = await prisma.product.create({ data: { name: name, price: price, quantity: quantity, code: productCode }, select: { name: true,
-            price: true, code: true
-        }});
+        if (typeof name !== "string" || typeof price !== "number" || typeof quantity !== "number" || typeof description !== "string" || typeof picture !== "string") {
+            return res.status(400).json({ error: "The format of requested data is wrong." });
+        }
+
+        let codeSlug = slugify(name, { strict: true, lower: true });
+        let count = 0;
+
+        let productCode = `${codeSlug}-${count}`;
+        let isCodeExist = await prisma.product.findUnique({ where: { code: productCode } });
+
+        while (isCodeExist) {
+            count++;
+            productCode = `${codeSlug}-${count}`;
+            isCodeExist = await prisma.product.findUnique({ where: { code: productCode } });
+        }
+
+        const newProduct = await prisma.product.create({
+            data: {
+                name: name,
+                price: price,
+                quantity: quantity,
+                description: description,
+                code: productCode,
+                picture: picture
+            },
+            select: {
+                name: true,
+                description: true,
+                price: true,
+                code: true,
+                picture: true
+            }
+        });
+
         return res.status(201).json(newProduct);
     } catch (err) {
-        return res.status(400).json({ error: err.message })
+        return res.status(500).json({ error: err.message }); 
     }
 }

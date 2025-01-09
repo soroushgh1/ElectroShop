@@ -27,11 +27,11 @@ export const LoginUsers = async (req, res) => {
 
         if(!isPasswordMatch) return res.status(400).json({ error: "Email or password is wrong." });
 
-        const accessToken = jwt.sign({ email: email}, process.env.JWT_ACCESS_SECRET, { expiresIn : '15m' });
-        const refreshToken = jwt.sign({ email: email}, process.env.JWT_REFRESH_SECRET, { expiresIn : '90d' });
+        const accessToken = jwt.sign({ email: email}, process.env.JWT_ACCESS_SECRET || "iamsoroushdeveloper", { expiresIn : '15m' });
+        const refreshToken = jwt.sign({ email: email}, process.env.JWT_REFRESH_SECRET || "iamsoroush", { expiresIn : '90d' });
 
-        res.cookie("accessToken", accessToken, { httpOnly: true, secure: true });
-        res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: true });
+        res.cookie("accessToken", accessToken, { httpOnly: true });
+        res.cookie("refreshToken", refreshToken, { httpOnly: true  });
 
         return res.status(200).json({ message: "User logged in."});
     } catch (err) {
