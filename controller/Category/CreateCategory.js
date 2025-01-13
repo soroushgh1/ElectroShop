@@ -23,7 +23,7 @@ export const CreateCategory = async (req, res) => {
             isCategoryExist = await prisma.category.findUnique({ where: { slug: categorySlug } });
         }
 
-        const newCategory = await prisma.category.create({ data: { name: name, slug: categorySlug, created_at: now, updated_at: now } });
+        const newCategory = await prisma.category.create({ data: { name: name, slug: categorySlug, created_at: String(now), updated_at: String(now) } });
 
         return res.status(201).json(newCategory);
     } catch (err) {

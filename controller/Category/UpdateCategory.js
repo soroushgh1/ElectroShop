@@ -28,7 +28,7 @@ export const UpdateCategory = async (req, res) => {
             isSlugExist = await prisma.category.findUnique({ where: { slug: slug } });
         }
 
-        const updatedCategory = await prisma.category.update({ where: { slug: categoryid }, data: { name: name, slug: slug, updated_at: now }, select: { name: true, slug: true }});
+        const updatedCategory = await prisma.category.update({ where: { slug: categoryid }, data: { name: name, slug: slug, updated_at: String(now) }, select: { name: true, slug: true, created_at: true, updated_at: true }});
 
         return res.status(200).json(updatedCategory);
     } catch (err) {

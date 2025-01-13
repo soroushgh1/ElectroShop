@@ -22,7 +22,7 @@ export const UpdateProduct = async (req, res) => {
             ...(picture && { picture }),
             ...(price && { price }),
             ...(quantity && { quantity }),
-            updated_at: now
+            updated_at: String(now)
         };
         
         if(reqData.name){
