@@ -25,6 +25,8 @@ export const CreateProduct = async (req, res) => {
             isCodeExist = await prisma.product.findUnique({ where: { code: productCode } });
         }
 
+        const now = new Date();
+
         const newProduct = await prisma.product.create({
             data: {
                 name: name,
@@ -32,7 +34,9 @@ export const CreateProduct = async (req, res) => {
                 quantity: quantity,
                 description: description,
                 code: productCode,
-                picture: picture
+                picture: picture,
+                created_at: now,
+                updated_at: now
             },
             select: {
                 name: true,

@@ -4,7 +4,7 @@ export const GetAllCategories = async (req, res) => {
     try {
         
         const categories = await prisma.category.findMany({ select: { name: true, slug: true, products: { select: {name: true, description: true, picture: true,
-            price: true
+            price: true, created_at: true, updated_at: true
         }}}});
 
         return res.status(200).json(categories);
@@ -21,7 +21,7 @@ export const GetOneCategories = async (req, res) => {
         if(!categorieid) return res.status(400).json({ error: "Category ID is not in URL." });
 
         const category = await prisma.category.findUnique({ where: { slug: categorieid }, select: { name: true, slug: true, products: { select: {name: true, description: true, picture: true,
-            price: true, code: true}}}});
+            price: true, code: true, created_at: true, updated_at: true}}}});
 
         if(!category) return res.status(404).json({ error: "Category not found." });
 

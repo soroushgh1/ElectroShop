@@ -14,13 +14,15 @@ export const UpdateProduct = async (req, res) => {
 
         if(!product) return res.status(404).json({ error: "Product not found." });
 
+        const now = new Date();
 
         const reqData = {
             ...(name && { name }),
             ...(description && { description }),
             ...(picture && { picture }),
             ...(price && { price }),
-            ...(quantity && { quantity })
+            ...(quantity && { quantity }),
+            updated_at: now
         };
         
         if(reqData.name){

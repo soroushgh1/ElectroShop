@@ -12,6 +12,7 @@ model User {
   email String @unique
   fullname String
   password String
+  email_verifyed_at String
 }
 
 model Product {
@@ -24,6 +25,8 @@ model Product {
   quantity Int
   category Category @relation(fields: [categoryid], references: [id])
   categoryid Int
+  created_at String
+  updated_at String
 }
 
 model Category {
@@ -31,4 +34,6 @@ model Category {
   name String
   slug String @unique
   products Product[]
+  created_at String
+  updated_at String
 }

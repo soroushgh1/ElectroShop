@@ -14,6 +14,8 @@ export const UpdateCategory = async (req, res) => {
         const { name } = req.body;
         if(!name) return res.status(400).json({ error: "Requested data can not be empty." });
 
+        const now = new Date();
+
         let categorySlug = slugify(name, { strict: true, lower: true });
         let count = 0;
 
@@ -26,7 +28,7 @@ export const UpdateCategory = async (req, res) => {
             isSlugExist = await prisma.category.findUnique({ where: { slug: slug } });
         }
 
-        const updatedCategory = await prisma.category.update({ where: { slug: categoryid }, data: { name: name, slug: slug }, select: { name: true, slug: true }});
+        const updatedCategory = await prisma.category.update({ where: { slug: categoryid }, data: { name: name, slug: slug, updated_at: now }, select: { name: true, slug: true }});
 
         return res.status(200).json(updatedCategory);
     } catch (err) {
