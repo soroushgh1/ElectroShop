@@ -13,6 +13,8 @@ model User {
   fullname String
   password String
   email_verifyed_at String
+  cart Cart? @relation
+  cartid Int @unique
 }
 
 model Product {
@@ -24,9 +26,10 @@ model Product {
   picture String
   quantity Int
   category Category @relation(fields: [categoryid], references: [id])
-  categoryid Int
+  categoryid Int @unique
   created_at String
   updated_at String
+  itemcart Itemcart[]
 }
 
 model Category {
@@ -36,4 +39,23 @@ model Category {
   products Product[]
   created_at String
   updated_at String
+}
+
+model Itemcart {
+  id Int @id @default(autoincrement())
+  product Product @relation(fields: [productid], references: [id])
+  productid Int @unique
+  quantity Int
+  itemsprice Int
+  cart Cart[]
+  created_at String
+  updated_at String
+}
+
+model Cart {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userid], references: [id])
+  userid Int @unique
+  itemcart Itemcart[]
+  payprice Int @default(0)
 }
