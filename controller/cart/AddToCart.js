@@ -34,7 +34,7 @@ export const AddToCart = async (req, res) => {
       await prisma.product.update({
         where: { code: productid },
         data: {
-          quantity: product - quantity
+          quantity: product.quantity - quantity
         }
       });
 
@@ -75,7 +75,7 @@ export const AddToCart = async (req, res) => {
         await prisma.product.update({
           where: { code: productid },
           data: {
-            quantity: product - quantity
+            quantity: product.quantity - quantity
           }
         });
 
@@ -109,7 +109,7 @@ export const AddToCart = async (req, res) => {
         await prisma.product.update({
           where: { code: productid },
           data: {
-            quantity: product - quantity
+            quantity: product.quantity - quantity
           }
         });
 
