@@ -22,7 +22,7 @@ export const RegisterUsers = async (req, res) => {
 
         const now = new Date();
 
-        const newUser = await prisma.user.create({ data: { email: email, password: hashedPassword, fullname: fullname, email_verifyed_at: String(now)  }, select: { email: true, fullname: true } });
+        const newUser = await prisma.user.create({ data: { email: email, password: hashedPassword, fullname: fullname, email_verified_at: String(now), created_at: String(now), updated_at: String(now)  }, select: { email: true, fullname: true } });
 
         return res.status(201).json(newUser);
     } catch (err) {

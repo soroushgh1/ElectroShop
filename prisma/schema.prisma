@@ -12,9 +12,13 @@ model User {
   email String @unique
   fullname String
   password String
-  email_verifyed_at String
+  email_verified_at String?
   cart Cart? @relation
-  cartid Int @unique
+  itemcart Itemcart[]
+  cartid Int? @unique
+  orders Order[]
+  created_at String
+  updated_at String
 }
 
 model Product {
@@ -26,9 +30,10 @@ model Product {
   picture String
   quantity Int
   category Category @relation(fields: [categoryid], references: [id])
-  categoryid Int @unique
+  categoryid Int
   created_at String
   updated_at String
+  orderitem OrderItem? @relation
   itemcart Itemcart[]
 }
 
@@ -44,10 +49,12 @@ model Category {
 model Itemcart {
   id Int @id @default(autoincrement())
   product Product @relation(fields: [productid], references: [id])
-  productid Int @unique
+  productid Int
   quantity Int
   itemsprice Int
-  cart Cart[]
+  cart Cart[] @relation("CartItem")
+  user User @relation(fields: [userid], references: [id])
+  userid Int
   created_at String
   updated_at String
 }
@@ -56,6 +63,44 @@ model Cart {
   id Int @id @default(autoincrement())
   user User @relation(fields: [userid], references: [id])
   userid Int @unique
-  itemcart Itemcart[]
+  itemcart Itemcart[] @relation("CartItem")
   payprice Int @default(0)
+  created_at String
+  updated_at String
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userid], references: [id])
+  userid Int
+  order_status String
+  total_amount Int
+  created_at String
+  updated_at String
+  order_items OrderItem[]
+  payment Payment? @relation
+}
+
+model OrderItem {
+  id Int @id @default(autoincrement())
+  order Order @relation(fields: [orderid], references: [id])
+  orderid Int
+  product Product @relation(fields: [productid], references: [id])
+  productid Int @unique
+  quantity Int
+  price Int
+  created_at String
+  updated_at String
+}
+
+model Payment {
+  id Int @id @default(autoincrement())
+  order Order @relation(fields: [orderid], references: [id])
+  orderid Int @unique
+  payment_method String
+  amount Int
+  payment_status String 
+  transaction_id String 
+  created_at String 
+  updated_at String
 }
