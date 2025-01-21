@@ -31,6 +31,13 @@ export const AddToCart = async (req, res) => {
         }
       })
 
+      await prisma.product.update({
+        where: { code: productid },
+        data: {
+          quantity: product - quantity
+        }
+      });
+
       const totalPayPrice = await prisma.itemcart.aggregate({
         _sum: { itemsprice: true },
         where: { userid: user.id },
@@ -65,6 +72,13 @@ export const AddToCart = async (req, res) => {
           }
         });
 
+        await prisma.product.update({
+          where: { code: productid },
+          data: {
+            quantity: product - quantity
+          }
+        });
+
         const totalPayPrice = await prisma.itemcart.aggregate({
           _sum: { itemsprice: true },
           where: { userid: user.id },
@@ -89,6 +103,13 @@ export const AddToCart = async (req, res) => {
             userid: user.id,
             created_at: String(now),
             updated_at: String(now)
+          }
+        });
+
+        await prisma.product.update({
+          where: { code: productid },
+          data: {
+            quantity: product - quantity
           }
         });
 
