@@ -17,6 +17,8 @@ export const AddToCart = async (req, res) => {
 
     const checkCart = await prisma.cart.findUnique({ where: { userid: user.id } });
 
+    if(product.quantity < quantity) return res.status(400).json({ error: "Not available, quantity is more than what we have"});
+
     const now = new Date();
     if (!checkCart) {
 
