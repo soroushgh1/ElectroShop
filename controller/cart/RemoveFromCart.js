@@ -2,6 +2,10 @@ import prisma from "../../prismaclient.js";
 
 export const RemoveFromCart = async (req, res) => {
   try {
+
+    const { quantity } = req.body;
+    if (!quantity || typeof (quantity) !== "number") return res.status(400).json({ error: "Requested data is invalid or not specfied." });
+
     const productid = req.params.id;
     if (!productid) return res.status(400).json({ error: "Product ID is not in the URL." });
 
@@ -20,13 +24,15 @@ export const RemoveFromCart = async (req, res) => {
 
     if (!userItemCart) return res.status(404).json({ error: "Item is not in the cart." });
 
-    if (userItemCart.quantity === 1) {
+    if(quantity > userItemCart.quantity) return res.status(400).json({ error: "Item quantity is more than available." });
+
+    if (userItemCart.quantity === 1 || userItemCart.quantity === quantity) {
       await prisma.itemcart.delete({ where: { id: userItemCart.id } });
     } else {
       await prisma.itemcart.update({
         where: { id: userItemCart.id },
         data: {
-          quantity: userItemCart.quantity - 1,
+          quantity: (userItemCart.quantity) - (quantity),
           itemsprice: product.price * (userItemCart.quantity - 1),
         },
       });
@@ -49,7 +55,7 @@ export const RemoveFromCart = async (req, res) => {
     await prisma.product.update({
       where: { code: productid },
       data: {
-        quantity: product.quantity + 1,
+        quantity: (product.quantity) + (quantity),
       },
     });
 
