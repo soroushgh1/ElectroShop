@@ -6,6 +6,7 @@ import AuthRoutes from "./routes/AuthRoutes.js";
 import ProductRoutes from "./routes/ProductRoutes.js"
 import CategoryRoutes from "./routes/CategoryRoutes.js";
 import CartRoutes from "./routes/CartRoutes.js";
+import OrderRoutes from "./routes/OrderRoutes.js";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use('/api/auth', AuthRoutes);
 app.use('/api/products', ProductRoutes);
 app.use('/api/category', CategoryRoutes);
 app.use('/api/cart', CartRoutes);
+app.use('/api/order', OrderRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
