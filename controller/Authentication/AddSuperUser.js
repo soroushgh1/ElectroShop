@@ -26,6 +26,9 @@ export const AddSuperUser = async (req, res) => {
 
         const now = new Date();
 
+        const isExist = await prisma.user.findUnique({ where: {email: email}});
+        if(isExist) return res.status(400).json({ error: "User already exist." });
+        
         const admin = await prisma.user.create({
             data: {
                 email: email,

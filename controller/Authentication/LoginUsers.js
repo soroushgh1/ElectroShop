@@ -38,3 +38,16 @@ export const LoginUsers = async (req, res) => {
         return res.status(400).json({ error: err.message })
     }
 }
+
+export const LogoutUsers =  (req, res) => {
+
+    try {
+        
+        res.clearCookie("accessToken");
+        res.clearCookie("refreshToken");
+
+        return res.status(200).json({ message: "User loged out successfully." });
+    } catch (err) {
+        return res.status(400).json({ error: err.message });
+    }
+}
