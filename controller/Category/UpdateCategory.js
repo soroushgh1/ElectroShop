@@ -5,6 +5,10 @@ export const UpdateCategory = async (req, res) => {
 
     try {
         
+        if(!req.user.isadmin){
+            return res.status(403).json({ error: "Access denied." });
+        }
+        
         const categoryid = req.params.id;
         if(!categoryid) return res.status(400).json({ error: "Category id is not in URL." });
 

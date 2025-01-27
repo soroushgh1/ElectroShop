@@ -5,6 +5,10 @@ export const CreateCategory = async (req, res) => {
 
     try {
         
+        if(!req.user.isadmin){
+            return res.status(403).json({ error: "Access denied." });
+        }
+        
         const { name } = req.body;
 
         if (!name) return res.status(400).json({ error: "Requested data cannot be empty" });

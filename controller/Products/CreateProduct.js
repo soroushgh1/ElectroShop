@@ -3,6 +3,11 @@ import slugify from "slugify";
 
 export const CreateProduct = async (req, res) => {
     try {
+
+        if(!req.user.isadmin){
+            return res.status(403).json({ error: "Access denied." });
+        }
+        
         const { name, description, price, quantity, picture, category_name } = req.body;
 
         if (!name || !price || !quantity || !description || !picture || !category_name ) {

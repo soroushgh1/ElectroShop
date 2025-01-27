@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js", 
+    "start": "node app.js",
     "dev": "nodemon app.js"
   },
   "keywords": [],
@@ -23,7 +23,10 @@
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
     "prisma": "^6.1.0",
-    "slugify": "^1.6.6"
+    "slugify": "^1.6.6",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-dist": "^5.18.2",
+    "swagger-ui-express": "^5.0.1"
   },
   "type": "module"
 }

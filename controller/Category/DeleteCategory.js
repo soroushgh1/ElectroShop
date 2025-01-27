@@ -3,6 +3,11 @@ import prisma from "../../prismaclient.js";
 
 export const DeleteCategories = async (req, res) => {
     try {
+
+        if(!req.user.isadmin){
+            return res.status(403).json({ error: "Access denied." });
+        }
+        
         const categorieid = req.params.id;
 
         if(!categorieid) return res.status(400).json({ error: "Category ID is not in URL." });

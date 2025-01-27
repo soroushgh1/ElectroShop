@@ -3,6 +3,10 @@ import prisma from "../../prismaclient.js";
 export const DeleteProduct = async (req, res) => {
     try {
         
+        if(!req.user.isadmin){
+            return res.status(403).json({ error: "Access denied." });
+        }
+        
         const productid = req.params.id;
 
         if(!productid) return res.status(400).json({ error : "Product ID is not in URL." });
