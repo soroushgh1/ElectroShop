@@ -75,6 +75,7 @@ model Order {
   userid Int
   order_status String
   total_amount Int
+  address String
   created_at String
   updated_at String
   order_items OrderItem[]
