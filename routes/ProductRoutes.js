@@ -6,6 +6,7 @@ import { DeleteProduct } from "../controller/Products/DeleteProduct.js";
 import { UpdateProduct } from "../controller/Products/UpdateProduct.js";
 import { ChangeTheCategory } from "../controller/Products/ChangeTheCategory.js";
 import { SearchProducts } from "../controller/Products/SearchProduct.js";
+import { CreateDiscount } from "../controller/Products/CreateDiscount.js";
 
 const router = Router();
 
@@ -23,5 +24,6 @@ router.post('/changecategory/:id', AuthCheck, ChangeTheCategory);
 
 router.get('/q/:id', SearchProducts);
 
+router.post('/creatediscount', AuthCheck, CreateDiscount);
 
 export default router;
